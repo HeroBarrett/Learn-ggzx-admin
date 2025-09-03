@@ -18,8 +18,6 @@ let useUserStore = defineStore('User', {
   actions: {
     // 用户登录的方法
     async userLogin(data: loginForm) {
-      // console.log(data);
-
       // 登录的方法
       const result: loginResponseData = await reqLogin(data)
 
@@ -32,9 +30,10 @@ let useUserStore = defineStore('User', {
         // 保证async函数返回一个成功的promise
         return 'ok'
       } else {
+        // 登录失败 -> 错误信息
         return Promise.reject(new Error(result.data.message))
       }
-      // 登录失败 -> 错误信息
+      
     },
   },
   getters: {},

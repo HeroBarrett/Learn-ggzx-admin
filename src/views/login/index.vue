@@ -24,6 +24,7 @@
 
 <script lang="ts" setup>
   import useUserStore from '@/store/modules/user';
+  import { getTime } from '@/utils/time';
   import { User, Lock } from '@element-plus/icons-vue'
   import { ElNotification } from 'element-plus';
   import { reactive, ref } from 'vue';
@@ -54,7 +55,8 @@
       $router.push('/')
       ElNotification({
         type: 'success',
-        message: '登录成功'
+        message: '欢迎回来',
+        title: `HI,${getTime()}好`
       })
     } catch (error) {
       // 登录失败加载效果消失
@@ -66,6 +68,9 @@
       })
     }
   }
+
+
+
 </script>
 
 <style scoped lang="scss">
