@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view></router-view>
+    <h1>我是一级路由登录</h1>
   </div>
 </template>
 
@@ -9,4 +9,6 @@
 
 </script>
 
-<style scoped></style>
+<style scoped>
+  
+</style>
