@@ -20,8 +20,8 @@ import pinia from './store'
 // 获取应用实例对象
 const app = createApp(App)
 // 安装 element-plus 插件
-// 配置element-plus国际化
 app.use(ElementPlus, {
+  // 配置element-plus国际化
   locale: zhCn,
 })
 
