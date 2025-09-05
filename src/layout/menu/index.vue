@@ -12,7 +12,7 @@
       </el-menu-item>
       <!-- 有子路由但是只有一个 -->
       <el-menu-item v-if="item.children && item.children.length == 1 && !item.children[0].meta.hidden"
-        :index="item.children[0].path">
+        :index="item.children[0].path" @click="goRoute">
         <template #title>
           <el-icon>
             <component :is="item.children[0].meta.icon"></component>
@@ -36,12 +36,19 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
+
   // 获取父组件传过来的全部路由数据
   defineProps(['menuList'])
 
+  // 获取路由器对象
+  let $router = useRouter();
+
   // 点击菜单回调
   const goRoute = (vc: any) => {
-    console.log(vc.index);
+    // console.log(vc.index);
+    // 路由跳转
+    $router.push(vc.index)
 
   }
 

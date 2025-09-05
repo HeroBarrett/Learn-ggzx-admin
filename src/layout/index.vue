@@ -18,7 +18,7 @@
     <div class="layout_tabbar">456</div>
     <!-- 内容展示区 -->
     <div class="layout_main">
-      <p style="height: 10000px; background-color: red;">一个段落</p>
+      <Main></Main>
     </div>
 
 
@@ -29,10 +29,12 @@
   import useUserStore from '@/store/modules/user';
   import Logo from './logo/index.vue'
   import Menu from './menu/index.vue'
-
+  import Main from './main/index.vue'
+  
   // 获取用户相关的小仓库
-
   let userStore = useUserStore()
+
+  
 </script>
 
 <style scoped lang="scss">
