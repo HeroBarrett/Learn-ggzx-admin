@@ -42,7 +42,7 @@
 
   // 获取路由对象
   let $router = useRoute()
-  console.log($router);
+  // console.log($router);
 
   // 获取layout配置仓库
   const LayoutSettingStore = useLayoutSettingStore()
