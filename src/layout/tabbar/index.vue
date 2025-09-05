@@ -36,7 +36,7 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -47,7 +47,7 @@
 <script lang="ts" setup>
   import useLayoutSettingStore from '@/store/modules/setting';
   import useUserStore from '@/store/modules/user';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   let userStore = useUserStore()
   // console.log(userStore.avatar);
 
@@ -59,6 +59,7 @@
 
   // 获取路由对象
   let $route = useRoute()
+  let $router = useRouter()
   // console.log($route.matched);
 
   // 刷新
@@ -79,6 +80,14 @@
     }
   }
 
+  // 退出登录
+  const logout = () => {
+    // 1、发退出登录请求
+    // 2、仓库中关于用户相关的数据清空【token|username|avatar】
+    userStore.userLogout()
+    // 3、跳转到登录页面
+    $router.push({path:'/login', query: {redirect: $route.path}})
+  }
 
 </script>
 

@@ -28,13 +28,15 @@
   import { User, Lock } from '@element-plus/icons-vue'
   import { ElNotification } from 'element-plus';
   import { reactive, ref } from 'vue';
-  import { useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   // 用户相关的仓库
   let userStore = useUserStore()
   // 收集账号与密码数据
   let loginForm = reactive({ username: '', password: '' })
   // 获取路由器
   let $router = useRouter()
+  // 获取路由对象
+  let $route = useRoute()
   // 获取el-form组件
   let loginForms = ref()
   // 控制按钮加载
@@ -58,7 +60,10 @@
       // 登录成功加载效果消失
       loading.value = false
       // 编程式导航跳转到展示数据页
-      $router.push('/')
+      // 判断登陆的时候，路由路径当中是否有query参数，如果有就往query参数跳转，没有就首页
+      let redirect: any = $route.query.redirect
+      $router.push({ path: redirect || '/' })
+
       ElNotification({
         type: 'success',
         message: '欢迎回来',
@@ -88,7 +93,7 @@
     }
   }
   const validatorPassword = (_rule: any, value: any, callback: any) => {
-    
+
     if (value.length >= 6) {
       callback()
     } else {

@@ -4,7 +4,7 @@ import type { loginForm, loginResponseData } from '@/api/user/type'
 import { defineStore } from 'pinia'
 import type { UserState } from './types/type'
 // 引入操作本地存储的工具方法
-import { GET_TOKEN, SET_TOKEN } from '@/utils/token'
+import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '@/utils/token'
 // 引入路由(常量路由)
 import { constantRoute } from '@/router/routers'
 // 创建小仓库
@@ -50,7 +50,17 @@ let useUserStore = defineStore('User', {
         this.username = result.data.checkUser.username
         this.avatar = result.data.checkUser.avatar
       }
-      
+    },
+
+    // 退出登录
+    userLogout() {
+      // 发请求去除TOKEN(没后端，置空)
+      // 清除仓库里存储的数据
+      this.token = ''
+      this.username = ''
+      this.avatar = ''
+      // 清除本地存储的TOKEN
+      REMOVE_TOKEN()
     }
   },
   getters: {},
