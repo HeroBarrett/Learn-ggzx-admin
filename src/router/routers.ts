@@ -19,9 +19,9 @@ export const constantRoute = [
     name: 'layout', // 命名路由
     redirect: '/home',
     meta: {
-      title: 'layout', // 菜单标题
+      title: '', // 菜单标题
       hidden: false, // 路由的标题在菜单中是否隐藏
-      icon: 'Avatar', // 图标
+      icon: '', // 图标
     },
     children: [
       {
@@ -63,6 +63,7 @@ export const constantRoute = [
       hidden: false, // 路由的标题在菜单中是否隐藏
       icon: 'Lock', // 图标
     },
+    redirect: '/acl/user',
     children: [
       {
         path: '/acl/user',
@@ -103,8 +104,9 @@ export const constantRoute = [
     meta: {
       title: '商品管理',
       icon: 'Goods',
-      hidden: false
+      hidden: false,
     },
+    redirect: '/product/trademark',
     children: [
       {
         path: '/product/trademark',
@@ -145,9 +147,8 @@ export const constantRoute = [
           hidden: false, // 路由的标题在菜单中是否隐藏
           icon: 'Orange', // 图标
         },
-      }
-    ]
-
+      },
+    ],
   },
   {
     // 404

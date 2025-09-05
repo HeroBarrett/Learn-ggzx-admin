@@ -9,8 +9,15 @@
       </el-icon>
       <!-- 左侧面包屑 -->
       <el-breadcrumb separator-icon="ArrowRight">
-        <el-breadcrumb-item>权限管理</el-breadcrumb-item>
-        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+        <!-- 动态展示路由名字与标题 -->
+        <!-- -使用v-show，因为有优先级问题 -->
+        <el-breadcrumb-item v-for="(item,index) in $route.matched" :key="index" v-show="item.meta.title" :to="item.path">
+          <el-icon style="margin: 0px 2px;vertical-align: bottom;">
+            <component :is="item.meta.icon"></component>
+          </el-icon>
+          <!-- 面包屑标题 -->
+          <span>{{ item.meta.title }}</span>
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="tabbar_right">
@@ -38,6 +45,7 @@
 
 <script lang="ts" setup>
   import useLayoutSettingStore from '@/store/modules/setting';
+  import { useRoute } from 'vue-router';
 
 
   // 图标切换
@@ -45,6 +53,11 @@
   const changeIcon = () => {
     LayoutSettingStore.fold = !LayoutSettingStore.fold
   }
+
+  // 获取路由对象
+  let $route = useRoute()
+  console.log($route.matched);
+
 
 
 </script>
