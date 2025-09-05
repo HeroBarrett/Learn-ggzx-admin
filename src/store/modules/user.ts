@@ -13,7 +13,7 @@ let useUserStore = defineStore('User', {
   state: (): UserState => {
     return {
       // token: localStorage.getItem('TOKEN'), // 用户的唯一标识
-      token: GET_TOKEN(),  // 用户的唯一标识
+      token: GET_TOKEN(), // 用户的唯一标识
       menuRoutes: constantRoute, // 仓库存储生成菜单需要的路由
       username: '',
       avatar: '',
@@ -38,7 +38,6 @@ let useUserStore = defineStore('User', {
         // 登录失败 -> 错误信息
         return Promise.reject(new Error(result.data.message))
       }
-      
     },
 
     // 获取用户信息方法
@@ -46,9 +45,12 @@ let useUserStore = defineStore('User', {
       let result = await reqUserInfo()
       // console.log(result);
       // 获取成功，存储信息
-      if(result.code == 200) {
+      if (result.code == 200) {
         this.username = result.data.checkUser.username
         this.avatar = result.data.checkUser.avatar
+        return 'ok'
+      } else {
+        return Promise.reject('获取用户信息失败')
       }
     },
 
@@ -61,7 +63,7 @@ let useUserStore = defineStore('User', {
       this.avatar = ''
       // 清除本地存储的TOKEN
       REMOVE_TOKEN()
-    }
+    },
   },
   getters: {},
 })
