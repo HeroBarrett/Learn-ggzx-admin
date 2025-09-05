@@ -2,8 +2,10 @@
   <div class="tabbar">
     <div class="tabbar_left">
       <!-- 顶部左侧静态 -->
-      <el-icon style="margin-right: 10px;">
-        <Expand />
+      <el-icon style="margin-right: 10px;" @click="changeIcon" class="icon">
+        <component :is="LayoutSettingStore.fold ? 'Expand' : 'Fold'">
+
+        </component>
       </el-icon>
       <!-- 左侧面包屑 -->
       <el-breadcrumb separator-icon="ArrowRight">
@@ -35,7 +37,14 @@
 </template>
 
 <script lang="ts" setup>
+  import useLayoutSettingStore from '@/store/modules/setting';
 
+
+  // 图标切换
+  const LayoutSettingStore = useLayoutSettingStore()
+  const changeIcon = () => {
+    LayoutSettingStore.fold = !LayoutSettingStore.fold
+  }
 
 
 </script>
@@ -53,6 +62,10 @@
       // background-color: aqua;
       align-items: center;
       margin-left: 20px;
+
+      .icon:hover {
+        cursor: pointer;
+      }
     }
 
     .tabbar_right {

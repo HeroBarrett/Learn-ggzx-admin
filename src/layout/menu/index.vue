@@ -1,5 +1,4 @@
 <template>
-  <div>
     <template v-for="item in menuList" :key="item.path">
       <!-- 没有子路由 -->
       <el-menu-item v-if="!item.children && !item.meta.hidden" :index="item.path" @click="goRoute">
@@ -26,18 +25,16 @@
           <el-icon>
             <component :is="item.meta.icon"></component>
           </el-icon>
-          <span>{{ item.meta.title }}</span>
+          <span >{{ item.meta.title }}</span>
         </template>
         <!-- 递归 -->
         <Menu :menuList="item.children"></Menu>
       </el-sub-menu>
     </template>
-  </div>
 </template>
 
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-
   // 获取父组件传过来的全部路由数据
   defineProps(['menuList'])
 
