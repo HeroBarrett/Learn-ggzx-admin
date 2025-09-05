@@ -17,6 +17,7 @@ export const constantRoute = [
     path: '/',
     component: () => import('@/layout/index.vue'),
     name: 'layout', // 命名路由
+    redirect: '/home',
     meta: {
       title: 'layout', // 菜单标题
       hidden: false, // 路由的标题在菜单中是否隐藏
