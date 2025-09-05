@@ -9,17 +9,8 @@
       <el-scrollbar class="scrollBar">
         <!-- 菜单组件 -->
         <el-menu>
-          <el-menu-item index="1">首页</el-menu-item>
-          <el-menu-item index="2">数据大屏</el-menu-item>
-          <!-- 折叠菜单 -->
-          <el-sub-menu index="3">
-            <template #title>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item index="3-1">用户管理</el-menu-item>
-            <el-menu-item index="3-2">角色管理</el-menu-item>
-            <el-menu-item index="3-3">菜单管理</el-menu-item>
-          </el-sub-menu>
+          <!-- 根据路由动态生成菜单 -->
+          <Menu :menuList="userStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
@@ -35,8 +26,13 @@
 </template>
 
 <script lang="ts" setup>
+  import useUserStore from '@/store/modules/user';
   import Logo from './logo/index.vue'
+  import Menu from './menu/index.vue'
 
+  // 获取用户相关的小仓库
+
+  let userStore = useUserStore()
 </script>
 
 <style scoped lang="scss">
@@ -54,7 +50,11 @@
         height: calc(100vh - $base-menu-logo-height);
         --el-menu-bg-color: $base-menu-background;
         --el-menu-text-color: white;
-        --el-menu-hover-bg-color: black;
+        --el-menu-hover-bg-color: #002347;
+
+        .el-menu {
+          border-right: none;
+        }
       }
     }
 

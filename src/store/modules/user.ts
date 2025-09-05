@@ -3,15 +3,18 @@ import { reqLogin } from '@/api/user'
 import type { loginForm, loginResponseData } from '@/api/user/type'
 import { defineStore } from 'pinia'
 import type { UserState } from './types/type'
+// 引入操作本地存储的工具方法
 import { GET_TOKEN, SET_TOKEN } from '@/utils/token'
-
+// 引入路由(常量路由)
+import { constantRoute } from '@/router/routers'
 // 创建小仓库
 let useUserStore = defineStore('User', {
   // 存储数据的地方
   state: (): UserState => {
     return {
       // token: localStorage.getItem('TOKEN'), // 用户的唯一标识
-      token: GET_TOKEN()  // 用户的唯一标识
+      token: GET_TOKEN(),  // 用户的唯一标识
+      menuRoutes: constantRoute, // 仓库存储生成菜单需要的路由
     }
   },
   // 异步|逻辑的地方

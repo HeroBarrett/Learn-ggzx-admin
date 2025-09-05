@@ -1,13 +1,20 @@
 import SvgIcon from './SvgIcon/index.vue'
+// 引入element-plus提供全部图标组件
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-const allGloablComponent:any = { SvgIcon }
+const allGloablComponent: any = { SvgIcon }
 // 对外暴露插件对象
-export default{
+export default {
   // 务必叫做install方法
-  install(app:any) {
+  install(app: any) {
     // 注册项目全部的自定义组件
-    Object.keys(allGloablComponent).forEach(key => {
+    Object.keys(allGloablComponent).forEach((key) => {
       app.component(key, allGloablComponent[key])
     })
-  }
+
+    // 将element-plus提供的图标注册为全局组件
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      app.component(key, component)
+    }
+  },
 }
