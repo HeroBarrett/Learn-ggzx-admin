@@ -4,7 +4,8 @@ import { defineStore } from "pinia";
 let useLayoutSettingStore = defineStore('SettingStore', {
   state: () => {
     return {
-      fold: false, //用户控制菜单折叠还是收起
+      fold: false, // 用户控制菜单折叠还是收起
+      refsh: false, // 控制刷新
     }
   }
 })

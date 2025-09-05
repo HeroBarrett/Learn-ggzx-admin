@@ -21,8 +21,8 @@
       </el-breadcrumb>
     </div>
     <div class="tabbar_right">
-      <el-button size="small" icon="Refresh" circle></el-button>
-      <el-button size="small" icon="FullScreen" circle></el-button>
+      <el-button size="small" icon="Refresh" circle @click="updateRefsh"></el-button>
+      <el-button size="small" icon="FullScreen" circle @click="fullScreen"></el-button>
       <el-button size="small" icon="Setting" circle></el-button>
       <img src="../../../public/logo.png" style="width: 24px;height: 24px; margin: 0 10px;">
       <!-- 下拉菜单 -->
@@ -58,7 +58,24 @@
   let $route = useRoute()
   console.log($route.matched);
 
+  // 刷新
+  const updateRefsh = () => {
+    LayoutSettingStore.refsh = !LayoutSettingStore.refsh
+  }
 
+  // 全屏按钮点击的回调
+  const fullScreen = () => {
+    // 判断是不是全屏模式
+    let full = document.fullscreenElement
+    if(!full) {
+      // 文档根节点实现全屏模式
+      document.documentElement.requestFullscreen()
+    } else {
+      // 退出全屏模式
+      document.exitFullscreen();
+    }
+  }
+  
 
 </script>
 
