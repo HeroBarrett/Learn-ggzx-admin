@@ -12,7 +12,7 @@ import pinia from './store'
 let userStore = useUserStore(pinia)
 
 // 全局前置守卫:任意路由切换
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   document.title = setting.title+ '-' + to.meta.title
   // to: 你将要访问哪个路由
   // from: 你从哪来
@@ -38,7 +38,7 @@ router.beforeEach(async (to, from, next) => {
         } catch (error) {
           // token过期
           // 退出登录
-          userStore.userLogout()
+          await userStore.userLogout()
           next({ path: '/login', query: { redirect: to.path } })
         }
       }
@@ -54,7 +54,7 @@ router.beforeEach(async (to, from, next) => {
 })
 
 // 全局后置守卫
-router.afterEach((to, from) => {
+router.afterEach((_to, _from) => {
   nprogress.done()
 })
 

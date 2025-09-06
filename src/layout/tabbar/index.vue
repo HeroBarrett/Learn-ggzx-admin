@@ -81,12 +81,12 @@
   }
 
   // 退出登录
-  const logout = () => {
+  const logout = async () => {
     // 1、发退出登录请求
     // 2、仓库中关于用户相关的数据清空【token|username|avatar】
-    userStore.userLogout()
+    await userStore.userLogout()
     // 3、跳转到登录页面
-    $router.push({path:'/login', query: {redirect: $route.path}})
+    $router.push({ path: '/login', query: { redirect: $route.path } })
   }
 
 </script>

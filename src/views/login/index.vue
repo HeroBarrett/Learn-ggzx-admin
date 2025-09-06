@@ -32,7 +32,7 @@
   // 用户相关的仓库
   let userStore = useUserStore()
   // 收集账号与密码数据
-  let loginForm = reactive({ username: '', password: '' })
+  let loginForm = reactive({ username: 'admin', password: '111111' })
   // 获取路由器
   let $router = useRouter()
   // 获取路由对象
