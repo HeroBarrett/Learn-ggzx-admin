@@ -43,12 +43,12 @@
   <el-dialog v-model="dialogVisible" title="添加品牌">
     <el-form style="width: 80%;">
       <el-form-item label="品牌名称" label-width="80px">
-        <el-input placeholder="请输入品牌名称"></el-input>
+        <el-input placeholder="请输入品牌名称" v-model="trademarkParams.tmName"></el-input>
       </el-form-item>
       <el-form-item label="品牌logo" label-width="80px">
-        <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+        <el-upload class="avatar-uploader" action="/api/admin/product/fileUpload" :headers="headers"
           :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <img v-if="trademarkParams.logoUrl" :src="trademarkParams.logoUrl" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
             <Plus />
           </el-icon>
@@ -65,8 +65,15 @@
 
 <script lang="ts" setup>
   import { reqHasTrademark } from '@/api/product/trademark';
-  import type { Records } from '@/api/product/trademark/type';
+  import type { Records, TradeMark } from '@/api/product/trademark/type';
   import { onMounted, ref } from 'vue';
+
+  // 引入用户相关的仓库
+  import useUserStore from '@/store/modules/user'
+  import { ElMessage, type UploadProps } from 'element-plus';
+  // 获取用户相关的小仓库：获取仓库内部token，登录成功以后携带给服务器
+  const userStore = useUserStore()
+  const headers = { Token: userStore.token }
 
   // 当前页码
   let pageNo = ref<number>(1)
@@ -78,6 +85,11 @@
   let trademarkArr = ref<Records>([])
   // 对话框的显示与隐藏
   let dialogVisible = ref<boolean>(false)
+  // 定义收集新增品牌数据
+  let trademarkParams = ref<TradeMark>({
+    tmName: '',
+    logoUrl: ''
+  })
   // 获取已有品牌的接口
   const getHasTrademark = async () => {
     let result = await reqHasTrademark(pageNo.value, limit.value)
@@ -87,7 +99,6 @@
       total.value = result.data.total
       trademarkArr.value = result.data.records
     }
-
   }
 
   // 组件挂载
@@ -126,35 +137,61 @@
     // 对话框隐藏
     dialogVisible.value = false
   }
+
+  // 上传图片钩子
+  const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+    // 要求:文件格式png|jpg|gif <4M
+    if (rawFile.type == 'image/jpeg' || rawFile.type == 'image/png' || rawFile.type == 'image/gif') {
+      if (rawFile.size / 1024 / 1024 < 4) {
+        return true
+      } else {
+        ElMessage({
+        type: 'error',
+        message: ' 上传的文件大小应小于4M '
+      })
+      return false
+      }
+    } else {
+      ElMessage({
+        type: 'error',
+        message: ' 上传的文件格式务必PNG|JPG|GIF '
+      })
+      return false
+    }
+  }
+  // 图片上传成功的钩子
+  const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
+    trademarkParams.value.logoUrl = response.data
+  }
 </script>
 
 <style scoped>
-.avatar-uploader .avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
+  .avatar-uploader .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>
 
 <style>
-.avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
-}
+  .avatar-uploader .el-upload {
+    border: 1px dashed var(--el-border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--el-transition-duration-fast);
+  }
 
-.avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
+  .avatar-uploader .el-upload:hover {
+    border-color: var(--el-color-primary);
+  }
 
-.el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
-}
+  .el-icon.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    text-align: center;
+  }
 </style>
