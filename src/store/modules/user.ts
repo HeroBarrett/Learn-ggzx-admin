@@ -6,6 +6,7 @@ import type { UserState } from './types/type'
 import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '@/utils/token'
 // 引入路由(常量路由)
 import { constantRoute } from '@/router/routers'
+import type { loginFormData } from '@/api/user/type'
 // 创建小仓库
 let useUserStore = defineStore('User', {
   // 存储数据的地方
@@ -21,9 +22,9 @@ let useUserStore = defineStore('User', {
   // 异步|逻辑的地方
   actions: {
     // 用户登录的方法
-    async userLogin(data: any) {
+    async userLogin(data: loginFormData) {
       // 登录的方法
-      const result: any = await reqLogin(data)
+      const result = await reqLogin(data)
       // console.log(result);
 
       if (result.code == 200) {
