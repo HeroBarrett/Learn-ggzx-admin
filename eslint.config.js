@@ -97,10 +97,10 @@ export default defineConfig([
     rules: {
       '@typescript-eslint/no-unused-vars': 'error', // 检查未使用的变量
       '@typescript-eslint/prefer-ts-expect-error': 'error', // 推荐使用@ts-expect-error而非@ts-ignore
-      '@typescript-eslint/no-explicit-any': 'off', // 允许使用any类型
       '@typescript-eslint/no-non-null-assertion': 'off', // 允许使用非空断言运算符(!)
       '@typescript-eslint/no-namespace': 'off', // 允许使用命名空间
       '@typescript-eslint/semi': 'off', // 关闭分号检查
+      '@typescript-eslint/no-explicit-any': 'off', // 允许使用any类型
     },
   },
 
