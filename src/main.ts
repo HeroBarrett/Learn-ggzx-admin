@@ -8,7 +8,7 @@ import '@/components/styles/index.scss'
 // 配置element-plus国际化
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 // SVG插件需要的配置代码
-// @ts-ignore
+// @ts-expect-error 忽略 SVG 注册插件类型检查，避免虚拟模块类型报错
 import 'virtual:svg-icons-register'
 // 引入自定义插件对象：注册整个项目全局组件
 import gloalCompent from '@/components'
