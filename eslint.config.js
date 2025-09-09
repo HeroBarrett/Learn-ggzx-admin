@@ -88,6 +88,8 @@ export default defineConfig([
       'vue/multi-word-component-names': 'off', // 关闭组件名必须多字的限制
       'vue/no-mutating-props': 'off', // 关闭禁止修改props的限制
       'vue/attribute-hyphenation': 'off', // 关闭属性名必须短横线命名的限制
+      '@typescript-eslint/no-explicit-any': 'off', // 允许在Vue文件中使用any类型
+      'vue/valid-attribute-name': 'off', // 关闭属性名有效性检查，允许作用域插槽简写语法
     },
   },
 
@@ -95,12 +97,12 @@ export default defineConfig([
   {
     files: ['**/*.{ts,mts,cts}'], // 针对所有TypeScript文件
     rules: {
+      '@typescript-eslint/no-explicit-any': 'off', // 允许使用any类型
       '@typescript-eslint/no-unused-vars': 'error', // 检查未使用的变量
       '@typescript-eslint/prefer-ts-expect-error': 'error', // 推荐使用@ts-expect-error而非@ts-ignore
       '@typescript-eslint/no-non-null-assertion': 'off', // 允许使用非空断言运算符(!)
       '@typescript-eslint/no-namespace': 'off', // 允许使用命名空间
       '@typescript-eslint/semi': 'off', // 关闭分号检查
-      '@typescript-eslint/no-explicit-any': 'off', // 允许使用any类型
     },
   },
 
