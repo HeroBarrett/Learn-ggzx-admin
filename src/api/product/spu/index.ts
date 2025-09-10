@@ -1,6 +1,15 @@
 // SPU管理模板接口
-import request from "@/utils/request"
-import type { AllTradeMark, HasSaleAttrResponseData, HasSpuResponseData, SaleAttrResponseData, SpuData, SpuHasImg } from "./type"
+import request from '@/utils/request'
+import type {
+  AllTradeMark,
+  HasSaleAttrResponseData,
+  HasSpuResponseData,
+  SaleAttrResponseData,
+  SkuData,
+  SkuInfoData,
+  SpuData,
+  SpuHasImg,
+} from './type'
 
 enum API {
   // 获取已有的SPU数据
@@ -17,11 +26,23 @@ enum API {
   ADDSPU_URL = '/admin/product/saveSpuInfo',
   // 修改一个SPU
   UPDATESPU_URL = '/admin/product/updateSpuInfo',
+  // 添加一个SKU
+  ADDSKU_URL = '/admin/product/saveSkuInfo',
+  // 查看某一个SPU的SKU
+  SKUINFO_URL = '/admin/product/findBySpuId/',
+  // 删除一个SPU
+  REMOVESPU_URL = '/admin/product/deleteSpu/',
 }
 
 // 获取某一个三级分类下已有的SPU数据
-export const reqHasSpu = (page: number, limit:number, category3Id: number|string) => {
-  return request.get<any,HasSpuResponseData>(API.HASSPU_URL + `${page}/${limit}?category3Id=${category3Id}`)
+export const reqHasSpu = (
+  page: number,
+  limit: number,
+  category3Id: number | string,
+) => {
+  return request.get<any, HasSpuResponseData>(
+    API.HASSPU_URL + `${page}/${limit}?category3Id=${category3Id}`,
+  )
 }
 
 // 获取全部SPU品牌的数据
@@ -52,4 +73,19 @@ export const reqAddOrUpdateSpu = (data: SpuData) => {
   } else {
     return request.post<any, any>(API.ADDSPU_URL, data)
   }
+}
+
+// 添加一个SKU
+export const reqAddSku = (data: SkuData) => {
+  return request.post<any, any>(API.ADDSKU_URL, data)
+}
+
+// 查看某一个SPU的SKU
+export const reqSkuList = (spuId: number | string) => {
+  return request.get<any, SkuInfoData>(API.SKUINFO_URL + spuId)
+}
+
+// 删除已有的SPU
+export const reqRemoveSpu = (spuId: number | string) => {
+  return request.delete<any, any>(API.REMOVESPU_URL + spuId)
 }
