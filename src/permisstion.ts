@@ -34,7 +34,8 @@ router.beforeEach(async (to, _from, next) => {
         // 没用户信息，发请求
         try {
           await userStore.userInfo()
-          next()
+          // 等待路由加载完毕放行
+          next({...to})
         } catch (error) {
           // token过期
           // 退出登录

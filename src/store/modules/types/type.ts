@@ -15,6 +15,7 @@ export interface UserState {
   username: string
   // 用户头像URL
   avatar: string
+  buttons: string[]
 }
 
 // 定义分类仓库数据类型接口

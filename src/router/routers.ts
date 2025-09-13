@@ -1,5 +1,4 @@
-// 对外暴露配置路由(常量路由)
-
+// 对外暴露配置路由(常量路由)：全部用户都可以访问到的路由
 export const constantRoute = [
   {
     // 登录路由
@@ -54,6 +53,23 @@ export const constantRoute = [
       icon: 'Platform', // 图标
     },
   },
+
+  {
+    // 404
+    path: '/404',
+    component: () => import('@/views/404/index.vue'),
+    name: '404', // 命名路由
+    meta: {
+      title: '404', // 菜单标题
+      hidden: true, // 路由的标题在菜单中是否隐藏
+      icon: 'DocumentDelete', // 图标
+    },
+  },
+  
+]
+
+// 异步路由
+export const asnycRoute = [
   {
     path: '/acl',
     component: () => import('@/layout/index.vue'),
@@ -150,18 +166,10 @@ export const constantRoute = [
       },
     ],
   },
-  {
-    // 404
-    path: '/404',
-    component: () => import('@/views/404/index.vue'),
-    name: '404', // 命名路由
-    meta: {
-      title: '404', // 菜单标题
-      hidden: true, // 路由的标题在菜单中是否隐藏
-      icon: 'DocumentDelete', // 图标
-    },
-  },
-  {
+]
+
+// 任意路由
+export const anyRoute = {
     path: '/:pathMatch(.*)*',
     redirect: '/404',
     name: 'Any',
@@ -170,5 +178,4 @@ export const constantRoute = [
       hidden: true, // 路由的标题在菜单中是否隐藏
       icon: 'DataLine', // 图标
     },
-  },
-]
+  }

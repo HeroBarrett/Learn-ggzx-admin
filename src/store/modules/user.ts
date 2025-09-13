@@ -5,10 +5,29 @@ import type { UserState } from './types/type'
 // 引入操作本地存储的工具方法
 import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '@/utils/token'
 // 引入路由(常量路由)
-import { constantRoute } from '@/router/routers'
+import { constantRoute, asnycRoute, anyRoute } from '@/router/routers'
 import type { loginFormData } from '@/api/user/type'
+//引入深拷贝方法
+//@ts-expect-error 123
+import cloneDeep from 'lodash/cloneDeep'
+import router from '@/router'
+
+// 过滤用户所需的异步路由
+function filterAsyncRoute(asyncRoute: any, routes: any) {
+  return asyncRoute.filter((item: any) => {
+    if (routes.includes(item.name)) {
+      if (item.children && item.children.length > 0) {
+        item.children = filterAsyncRoute(item.children, routes)
+      }
+      return true
+    }
+  })
+}
+
+
+
 // 创建小仓库
-let useUserStore = defineStore('User', {
+const useUserStore = defineStore('User', {
   // 存储数据的地方
   state: (): UserState => {
     return {
@@ -17,6 +36,7 @@ let useUserStore = defineStore('User', {
       menuRoutes: constantRoute, // 仓库存储生成菜单需要的路由
       username: '',
       avatar: '',
+      buttons: []
     }
   },
   // 异步|逻辑的地方
@@ -43,12 +63,23 @@ let useUserStore = defineStore('User', {
 
     // 获取用户信息方法
     async userInfo() {
-      let result = await reqUserInfo()
+      const result = await reqUserInfo()
       // console.log(result)
       // 获取成功，存储信息
       if (result.code == 200) {
         this.username = result.data.name
         this.avatar = result.data.avatar
+        this.buttons = result.data.buttons
+        // 计算用户要展示的异步路由
+        const userAsyncRoute = filterAsyncRoute(cloneDeep(asnycRoute), result.data.routes)
+        // 菜单的数据
+        this.menuRoutes = [...constantRoute, ...userAsyncRoute, anyRoute]
+        //目前路由器管理的只有常量路由:用户计算完毕异步路由、任意路由动态追加
+        ;[...userAsyncRoute, anyRoute].forEach((route: any) => {
+          router.addRoute(route)
+        })
+        // console.log(this.menuRoutes);
+        
         return 'ok'
       } else {
         return Promise.reject(new Error(result.message))
@@ -58,7 +89,7 @@ let useUserStore = defineStore('User', {
     // 退出登录
     async userLogout() {
       // 发请求去除TOKEN
-      let result = await reqLogout()
+      const result = await reqLogout()
       if (result.code == 200) {
         // 退出登录成功
         // 清除仓库里存储的数据

@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <!-- 卡片顶部按钮 -->
-      <el-button type="primary" size="default" icon="plus" @click="addTrademark">添加品牌</el-button>
+      <el-button type="primary" size="default" icon="plus" @click="addTrademark" v-has="'btn.Trademark.add'">添加品牌</el-button>
       <!-- 表格组件：用于展示已有的品牌数据 -->
       <el-table style="margin: 10px 0;" border :data="trademarkArr">
         <el-table-column label="序号" width="80px" align="center" type="index"></el-table-column>
